@@ -1,2 +1,2 @@
 # data-hub-blogging
-SAP Data Hub blog posts
+This repository contains supplementary materials for my (private) blog posts about SAP Data Hub
