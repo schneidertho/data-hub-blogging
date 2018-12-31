@@ -1,6 +1,6 @@
 {
     "properties": {},
-    "description": "Workflow",
+    "description": "Workflow (with Wiretap)",
     "processes": {
         "workflowtrigger1": {
             "component": "com.sap.dh.trigger",

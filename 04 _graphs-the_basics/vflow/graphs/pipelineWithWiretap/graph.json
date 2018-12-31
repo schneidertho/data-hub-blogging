@@ -1,7 +1,6 @@
 {
     "properties": {},
-    "iconsrc": "hana.svg",
-    "description": "Pipeline",
+    "description": "Pipeline (with Wiretap)",
     "processes": {
         "12multiplexer1": {
             "component": "com.sap.system.multiplexer.1-2",
