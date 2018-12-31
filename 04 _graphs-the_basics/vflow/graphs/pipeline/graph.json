@@ -1,0 +1,207 @@
+{
+    "properties": {},
+    "iconsrc": "hana.svg",
+    "description": "Pipeline",
+    "processes": {
+        "12multiplexer1": {
+            "component": "com.sap.system.multiplexer.1-2",
+            "metadata": {
+                "label": "1:2 Multiplexer",
+                "x": 350,
+                "y": 57,
+                "height": 80,
+                "width": 120,
+                "extensible": true,
+                "config": {}
+            }
+        },
+        "saphanaclient2": {
+            "component": "com.sap.hana.client2",
+            "metadata": {
+                "label": "SAP HANA Client",
+                "x": 534.9999990463257,
+                "y": 102,
+                "height": 80,
+                "width": 120,
+                "config": {
+                    "tableName": "test",
+                    "tableColumns": [
+                        {
+                            "name": "\"User ID\"",
+                            "type": "INTEGER"
+                        },
+                        {
+                            "name": "deviceid",
+                            "type": "INTEGER"
+                        },
+                        {
+                            "name": "temperature",
+                            "type": "DOUBLE"
+                        },
+                        {
+                            "name": "humidity",
+                            "type": "DOUBLE"
+                        },
+                        {
+                            "name": "co2",
+                            "type": "DOUBLE"
+                        },
+                        {
+                            "name": "co",
+                            "type": "DOUBLE"
+                        },
+                        {
+                            "name": "lpg",
+                            "type": "DOUBLE"
+                        },
+                        {
+                            "name": "smoke",
+                            "type": "DOUBLE"
+                        },
+                        {
+                            "name": "presence",
+                            "type": "INTEGER"
+                        },
+                        {
+                            "name": "light",
+                            "type": "DOUBLE"
+                        },
+                        {
+                            "name": "sound",
+                            "type": "DOUBLE"
+                        }
+                    ],
+                    "initTable": "Drop (Cascade)",
+                    "connection": {
+                        "connectionProperties": {
+                            "host": "",
+                            "password": "",
+                            "port": "",
+                            "user": "",
+                            "useTLS": false
+                        },
+                        "configurationType": "Configuration Manager",
+                        "connectionID": "HANA"
+                    }
+                }
+            }
+        },
+        "terminal1": {
+            "component": "com.sap.util.terminal",
+            "metadata": {
+                "label": "Terminal",
+                "x": 719.9999980926514,
+                "y": 57,
+                "height": 80,
+                "width": 120,
+                "ui": "dynpath",
+                "config": {}
+            }
+        },
+        "tostringconverter1": {
+            "component": "com.sap.util.toStringConverter",
+            "metadata": {
+                "label": "ToString Converter",
+                "x": 569.4999990463257,
+                "y": 12,
+                "height": 50,
+                "width": 50,
+                "config": {}
+            }
+        },
+        "wiretap1": {
+            "component": "com.sap.util.wiretap",
+            "metadata": {
+                "label": "Wiretap",
+                "x": 181,
+                "y": 57,
+                "height": 80,
+                "width": 120,
+                "ui": "dynpath",
+                "config": {}
+            }
+        },
+        "datagenerator1": {
+            "component": "com.sap.util.dataGenerator",
+            "metadata": {
+                "label": "Data Generator",
+                "x": -37,
+                "y": 57,
+                "height": 80,
+                "width": 120,
+                "extensible": true,
+                "config": {}
+            }
+        }
+    },
+    "groups": [],
+    "connections": [
+        {
+            "metadata": {
+                "points": "474,106 501.99999952316284,106 501.99999952316284,151 529.9999990463257,151"
+            },
+            "src": {
+                "port": "out2",
+                "process": "12multiplexer1"
+            },
+            "tgt": {
+                "port": "data",
+                "process": "saphanaclient2"
+            }
+        },
+        {
+            "metadata": {
+                "points": "474,88 501.99999952316284,88 501.99999952316284,28 564.4999990463257,28"
+            },
+            "src": {
+                "port": "out1",
+                "process": "12multiplexer1"
+            },
+            "tgt": {
+                "port": "ininterface",
+                "process": "tostringconverter1"
+            }
+        },
+        {
+            "metadata": {
+                "points": "623.4999990463257,37 686.9999985694885,37 686.9999985694885,97 714.9999980926514,97"
+            },
+            "src": {
+                "port": "outstring",
+                "process": "tostringconverter1"
+            },
+            "tgt": {
+                "port": "in1",
+                "process": "terminal1"
+            }
+        },
+        {
+            "metadata": {
+                "points": "305,97 345,97"
+            },
+            "src": {
+                "port": "out",
+                "process": "wiretap1"
+            },
+            "tgt": {
+                "port": "in1",
+                "process": "12multiplexer1"
+            }
+        },
+        {
+            "metadata": {
+                "points": "87,97 176,97"
+            },
+            "src": {
+                "port": "output",
+                "process": "datagenerator1"
+            },
+            "tgt": {
+                "port": "in",
+                "process": "wiretap1"
+            }
+        }
+    ],
+    "inports": {},
+    "outports": {}
+}

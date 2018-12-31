@@ -1,0 +1,49 @@
+{
+    "properties": {},
+    "description": "Do Nothing for 30 Seconds",
+    "processes": {
+        "datagenerator1": {
+            "component": "com.sap.util.dataGenerator",
+            "metadata": {
+                "label": "Data Generator",
+                "x": 12,
+                "y": 12,
+                "height": 80,
+                "width": 120,
+                "extensible": true,
+                "config": {
+                    "script": "// This operator is needed to keep compatibility to the old datagenerator\nvar counter = 0;\n\ngetRandom = function(min, max) {\n    return Math.random() * (max - min) + min;\n};\n\ngetRandomInt = function(min, max) {\n    return Math.floor(Math.random() * (max - min + 1)) + min;\n};\n\ngenerateData = function() {\n\n    // payload = \"3,26.4,60.9,532.0,1.0,24.0,55.0,0,657.0,437.0,1388,5,-33,3.33\"\n\n    var payload = getRandomInt(2, 6) + \",\"; // DeviceID\n    payload += getRandom(25, 26) + \",\"; // Temperatur\n    payload += getRandom(40, 60) + \",\"; // Humidity\n    payload += getRandom(500, 600) + \",\"; // CO2    \n    payload += getRandom(0.9, 1.1) + \",\"; // CO    \n    payload += getRandom(23, 25) + \",\"; // LPG    \n    payload += getRandom(50, 60) + \",\"; // Smoke  \n    payload += getRandomInt(0, 1) + \",\"; // Presence \n    payload += getRandom(600, 800) + \",\"; // Light  \n    payload += getRandom(400, 500) + \"\\r\\n\"; // Sound  \n\n    return payload;\n};\n\n$.addTimer(\"30s\",doTick);\n\nfunction doTick(ctx) {\n    $.output(counter+\",\"+generateData());\n    counter++;\n}\n"
+                }
+            }
+        },
+        "graphterminator1": {
+            "component": "com.sap.util.graphTerminator",
+            "metadata": {
+                "label": "Graph Terminator",
+                "x": 181,
+                "y": 12,
+                "height": 80,
+                "width": 120,
+                "config": {}
+            }
+        }
+    },
+    "groups": [],
+    "connections": [
+        {
+            "metadata": {
+                "points": "136,52 176,52"
+            },
+            "src": {
+                "port": "output",
+                "process": "datagenerator1"
+            },
+            "tgt": {
+                "port": "stop",
+                "process": "graphterminator1"
+            }
+        }
+    ],
+    "inports": {},
+    "outports": {}
+}

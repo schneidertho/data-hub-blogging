@@ -1,0 +1,148 @@
+{
+    "properties": {},
+    "description": "Workflow",
+    "processes": {
+        "workflowtrigger1": {
+            "component": "com.sap.dh.trigger",
+            "metadata": {
+                "label": "Workflow Trigger",
+                "x": 12,
+                "y": 72,
+                "height": 80,
+                "width": 120,
+                "extensible": true,
+                "config": {}
+            }
+        },
+        "pipeline1": {
+            "component": "com.sap.dh.vflowpipeline",
+            "metadata": {
+                "label": "Pipeline",
+                "x": 181,
+                "y": 72,
+                "height": 80,
+                "width": 120,
+                "extensible": true,
+                "config": {
+                    "graphName": "com.sap.demo.counter"
+                }
+            }
+        },
+        "workflowterminator1": {
+            "component": "com.sap.dh.terminator",
+            "metadata": {
+                "label": "Workflow Terminator",
+                "x": 534.9999990463257,
+                "y": 12,
+                "height": 80,
+                "width": 120,
+                "config": {}
+            }
+        },
+        "wiretap1": {
+            "component": "com.sap.util.wiretap",
+            "metadata": {
+                "label": "Wiretap",
+                "x": 365.9999990463257,
+                "y": 12,
+                "height": 80,
+                "width": 120,
+                "ui": "dynpath",
+                "config": {}
+            }
+        },
+        "workflowterminator2": {
+            "component": "com.sap.dh.terminator",
+            "metadata": {
+                "label": "Workflow Terminator",
+                "x": 534.9999990463257,
+                "y": 132,
+                "height": 80,
+                "width": 120,
+                "config": {}
+            }
+        },
+        "wiretap2": {
+            "component": "com.sap.util.wiretap",
+            "metadata": {
+                "label": "Wiretap",
+                "x": 365.9999990463257,
+                "y": 132,
+                "height": 80,
+                "width": 120,
+                "ui": "dynpath",
+                "config": {}
+            }
+        }
+    },
+    "groups": [],
+    "connections": [
+        {
+            "metadata": {
+                "points": "136,112 176,112"
+            },
+            "src": {
+                "port": "output",
+                "process": "workflowtrigger1"
+            },
+            "tgt": {
+                "port": "input",
+                "process": "pipeline1"
+            }
+        },
+        {
+            "metadata": {
+                "points": "305,103 332.99999952316284,103 332.99999952316284,52 360.9999990463257,52"
+            },
+            "src": {
+                "port": "output",
+                "process": "pipeline1"
+            },
+            "tgt": {
+                "port": "in",
+                "process": "wiretap1"
+            }
+        },
+        {
+            "metadata": {
+                "points": "305,121 332.99999952316284,121 332.99999952316284,172 360.9999990463257,172"
+            },
+            "src": {
+                "port": "error",
+                "process": "pipeline1"
+            },
+            "tgt": {
+                "port": "in",
+                "process": "wiretap2"
+            }
+        },
+        {
+            "metadata": {
+                "points": "489.9999990463257,52 529.9999990463257,52"
+            },
+            "src": {
+                "port": "out",
+                "process": "wiretap1"
+            },
+            "tgt": {
+                "port": "stop",
+                "process": "workflowterminator1"
+            }
+        },
+        {
+            "metadata": {
+                "points": "489.9999990463257,172 529.9999990463257,172"
+            },
+            "src": {
+                "port": "out",
+                "process": "wiretap2"
+            },
+            "tgt": {
+                "port": "stop",
+                "process": "workflowterminator2"
+            }
+        }
+    ],
+    "inports": {},
+    "outports": {}
+}

@@ -1,0 +1,191 @@
+{
+    "description": "Extended Workflow",
+    "processes": {
+        "workflowtrigger1": {
+            "component": "com.sap.dh.trigger",
+            "metadata": {
+                "label": "Workflow Trigger",
+                "x": 12,
+                "y": 72,
+                "height": 80,
+                "width": 120,
+                "extensible": true,
+                "config": {}
+            }
+        },
+        "workflowsplit1": {
+            "component": "com.sap.dh.split",
+            "metadata": {
+                "label": "Workflow Split",
+                "x": 181,
+                "y": 72,
+                "height": 80,
+                "width": 120,
+                "extensible": true,
+                "config": {}
+            }
+        },
+        "pipeline1": {
+            "component": "com.sap.dh.vflowpipeline",
+            "metadata": {
+                "label": "Pipeline (10 seconds)",
+                "x": 365.9999990463257,
+                "y": 12,
+                "height": 80,
+                "width": 120,
+                "extensible": true,
+                "config": {
+                    "graphName": "doNothing10Seconds"
+                }
+            }
+        },
+        "pipeline2": {
+            "component": "com.sap.dh.vflowpipeline",
+            "metadata": {
+                "label": "Pipeline (10 seconds)",
+                "x": 546.9999980926514,
+                "y": 11.500000238418579,
+                "height": 80,
+                "width": 120,
+                "extensible": true,
+                "config": {
+                    "graphName": "doNothing10Seconds"
+                }
+            }
+        },
+        "pipeline3": {
+            "component": "com.sap.dh.vflowpipeline",
+            "metadata": {
+                "label": "Pipeline (30 seconds)",
+                "x": 459.9999990463257,
+                "y": 132,
+                "height": 80,
+                "width": 120,
+                "extensible": true,
+                "config": {
+                    "graphName": "doNothing30Seconds"
+                }
+            }
+        },
+        "workflowmergeand1": {
+            "component": "com.sap.dh.logical.AND",
+            "metadata": {
+                "label": "Workflow Merge (and)",
+                "x": 735.999997138977,
+                "y": 72,
+                "height": 80,
+                "width": 120,
+                "extensible": true,
+                "config": {}
+            }
+        },
+        "workflowterminator1": {
+            "component": "com.sap.dh.terminator",
+            "metadata": {
+                "label": "Workflow Terminator",
+                "x": 904.999997138977,
+                "y": 72,
+                "height": 80,
+                "width": 120,
+                "config": {}
+            }
+        }
+    },
+    "groups": [],
+    "connections": [
+        {
+            "metadata": {
+                "points": "136,112 176,112"
+            },
+            "src": {
+                "port": "output",
+                "process": "workflowtrigger1"
+            },
+            "tgt": {
+                "port": "in",
+                "process": "workflowsplit1"
+            }
+        },
+        {
+            "metadata": {
+                "points": "305,103 332.99999952316284,103 332.99999952316284,52 360.9999990463257,52"
+            },
+            "src": {
+                "port": "out1",
+                "process": "workflowsplit1"
+            },
+            "tgt": {
+                "port": "input",
+                "process": "pipeline1"
+            }
+        },
+        {
+            "metadata": {
+                "points": "489.9999990463257,43 516,43 516,51.5 541.9999980926514,51.50000023841858"
+            },
+            "src": {
+                "port": "output",
+                "process": "pipeline1"
+            },
+            "tgt": {
+                "port": "input",
+                "process": "pipeline2"
+            }
+        },
+        {
+            "metadata": {
+                "points": "305,121 380,121 380,172 454.9999990463257,172"
+            },
+            "src": {
+                "port": "out2",
+                "process": "workflowsplit1"
+            },
+            "tgt": {
+                "port": "input",
+                "process": "pipeline3"
+            }
+        },
+        {
+            "metadata": {
+                "points": "670.9999980926514,42.50000023841858 701,42.5 701,103 730.999997138977,103"
+            },
+            "src": {
+                "port": "output",
+                "process": "pipeline2"
+            },
+            "tgt": {
+                "port": "input",
+                "process": "workflowmergeand1"
+            }
+        },
+        {
+            "metadata": {
+                "points": "583.9999990463257,163 657.5,163 657.5,121 730.999997138977,121"
+            },
+            "src": {
+                "port": "output",
+                "process": "pipeline3"
+            },
+            "tgt": {
+                "port": "input2",
+                "process": "workflowmergeand1"
+            }
+        },
+        {
+            "metadata": {
+                "points": "859.999997138977,112 899.999997138977,112"
+            },
+            "src": {
+                "port": "output",
+                "process": "workflowmergeand1"
+            },
+            "tgt": {
+                "port": "stop",
+                "process": "workflowterminator1"
+            }
+        }
+    ],
+    "inports": {},
+    "outports": {},
+    "properties": {}
+}
